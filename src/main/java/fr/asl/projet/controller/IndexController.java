@@ -3,9 +3,7 @@ package fr.asl.projet.controller;
 import fr.asl.projet.model.Client;
 import fr.asl.projet.model.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class IndexController {
@@ -13,7 +11,7 @@ public class IndexController {
     private ClientRepository clientRepository;
 
     @PostMapping("/add")
-    public String add(String login, String password) {
+    public String add(@RequestParam String login, @RequestParam String password) {
         clientRepository.save(new Client(login, password, "nom", "adresse", "mail"));
         return "Ajout d'un utilisateur";
     }
@@ -24,7 +22,7 @@ public class IndexController {
     }
 
     @GetMapping("/find/{id}")
-    public Client find(Integer id) {
+    public Client find(@PathVariable Integer id) {
         return clientRepository.findById(id).get();
     }
 }
