@@ -13,18 +13,18 @@ public class Client {
 
     private String login;
     private String password;
-    private String nom;
-    private String adresse;
+    private String name;
+    private String address;
     private String mail;
 
     public Client() {
     }
 
-    public Client(String login, String password, String nom, String adresse, String mail) {
+    public Client(String login, String password, String name, String address, String mail) {
         this.login = login;
         this.password = password;
-        this.nom = nom;
-        this.adresse = adresse;
+        this.name = name;
+        this.address = address;
         this.mail = mail;
     }
 
@@ -52,20 +52,20 @@ public class Client {
         this.password = password;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getMail() {

@@ -1,0 +1,58 @@
+<!-- src/main/resources/templates/addBook.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter un Ouvrage</title>
+</head>
+<body>
+<h1>Ajouter un ouvrage</h1>
+<form action="/addBook" method="POST">
+  <p>Ajoutons un ouvrage</p>
+
+  <div>
+      <label for="title">Titre:</label>
+      <input name="title" id="title" value="">
+  </div>
+  <div>
+      <label for="author">Auteur:</label>
+      <input name="author" id="author" value="">
+  </div>
+  <div>
+      <label for="editor">Editeur:</label>
+      <input name="editor" id="editor" value="">
+  </div>
+  <div>
+      <label for="pageNb">Nombre de pages:</label>
+      <input name="pageNb" id="pageNb" value="">
+  </div>
+  <div>
+      <label for="state">Etat:</label>
+      <input name="state" id="state" value="">
+  </div>
+  <div>
+      <label for="price">Prix:</label>
+      <input name="price" id="price" value="">
+  </div>
+  <div>
+    <label for="shippingPrice">Frais de port:</label>
+    <input name="shippingPrice" id="shippingPrice" value="">
+  </div>
+  <div>
+      <label for="note">Note:</label>
+      <input name="note" id="note" value="">
+  </div>
+
+  <div>
+    <button>Ajouter un ouvrage</button>
+  </div>
+
+</form>
+
+<form action="/" method="GET">
+    <button>Retour à la page d'accueil</button>
+</form>
+
+</body>
+</html>
