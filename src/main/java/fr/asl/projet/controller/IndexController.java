@@ -6,6 +6,7 @@ import fr.asl.projet.model.Client;
 import fr.asl.projet.model.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -26,6 +27,12 @@ public class IndexController {
     public String addBook(@RequestParam String title, @RequestParam String author, @RequestParam String editor, @RequestParam Integer pageNb, @RequestParam String state, @RequestParam Integer price, @RequestParam Integer shippingPrice, @RequestParam Integer note) {
         bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice, note));
         return "redirect:/";
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("books", bookRepository.findAll());
+        return "index";
     }
 
 
