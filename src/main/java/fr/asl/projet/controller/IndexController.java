@@ -28,20 +28,17 @@ public class IndexController {
         bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice));
         return "redirect:/";
     }
-
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("books", bookRepository.findAll());
-        return "index";
-    }
+    
 
 
     @GetMapping("/list")
+    @ResponseBody
     public Iterable<Client> all() {
         return clientRepository.findAll();
     }
 
     @GetMapping("/find/{id}")
+    @ResponseBody
     public Client find(@PathVariable Integer id) {
         return clientRepository.findById(id).get();
     }
@@ -54,5 +51,15 @@ public class IndexController {
     @GetMapping("/addBook")
     public String addBook() {
         return "addBook";
+    }
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("books", bookRepository.findAll());
+        return "index";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 }

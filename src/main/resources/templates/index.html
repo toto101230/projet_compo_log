@@ -49,5 +49,11 @@
         </tbody>
     </table>
 
+    <div>
+        <a href="/login">Login</a>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
 </body>
 </html>
