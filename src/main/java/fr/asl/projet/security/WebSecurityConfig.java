@@ -18,25 +18,38 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/librarian").hasRole("LIBRAIRIAN") //todo a voir
                         .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
+                ).formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
-                )
-                .logout((logout) -> logout.permitAll());
+                ).logout((logout) -> logout.permitAll());
 
         return http.build();
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build());
 
-        return new InMemoryUserDetailsManager(user);
+        manager.createUser(User.withDefaultPasswordEncoder()
+                .username("librarian")
+                .password("password")
+                .roles("LIBRAIRIAN", "USER")
+                .build());
+
+        manager.createUser(User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("password")
+                .roles("ADMIN", "USER", "LIBRAIRIAN")
+                .build());
+
+        return manager;
     }
 }
