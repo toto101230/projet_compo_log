@@ -13,6 +13,20 @@
             <form action="/addClient" method="GET">
                 <button>Page d'ajout des clients</button>
             </form>
+
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <form action="/logout" method="GET">
+                    <button>Se déconnecter</button>
+                </form>
+            </div>
+            <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                <form action="/login" method="GET">
+                    <button>Se connecter</button>
+                </form>
+            </div>
+
+
+
         </nav>
     </header>
 </header>

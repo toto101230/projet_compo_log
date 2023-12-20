@@ -7,36 +7,37 @@
     <title>Ajouter un Client</title>
 </head>
 <body>
-<h1>Ajouter un Client</h1>
-<form action="/addClient" method="POST">
-    <p>Ajoutons un client</p>
+    <h1>Ajouter un Client</h1>
+    <form th:action="@{/addClient}" method="POST">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <p>Ajoutons un client</p>
 
-    <div>
-        <label for="login">Nom d'utlisateur:</label>
-        <input name="login" id="login" value="">
-    </div>
-    <div>
-        <label for="password">Mot de passe</label>
-        <input name="password" id="password" value="">
-    </div>
-    <div>
-        <label for="name">Nom:</label>
-        <input name="name" id="name" value="">
-    </div>
-    <div>
-        <label for="address">Adresse:</label>
-        <input name="address" id="address" value="">
-    </div>
-    <div>
-        <label for="mail">Mail:</label>
-        <input name="mail" id="mail" value="">
-    </div>
-    <div>
-        <button>Ajouter</button>
-    </div>
-</form>
-<form action="/" method="GET">
-    <button>Retour à la page d'accueil</button>
-</form>
+        <div>
+            <label for="login">Nom d'utlisateur:</label>
+            <input name="login" id="login" value="">
+        </div>
+        <div>
+            <label for="password">Mot de passe</label>
+            <input name="password" id="password" value="">
+        </div>
+        <div>
+            <label for="name">Nom:</label>
+            <input name="name" id="name" value="">
+        </div>
+        <div>
+            <label for="address">Adresse:</label>
+            <input name="address" id="address" value="">
+        </div>
+        <div>
+            <label for="mail">Mail:</label>
+            <input name="mail" id="mail" value="">
+        </div>
+        <div>
+            <button>Ajouter</button>
+        </div>
+    </form>
+    <form action="/" method="GET">
+        <button>Retour à la page d'accueil</button>
+    </form>
 </body>
 </html>

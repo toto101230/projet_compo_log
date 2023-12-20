@@ -24,8 +24,12 @@ public class IndexController {
     }
 
     @GetMapping("/admin")
-    public String admin() {return "admin";}
+    public String admin() {
+        return "admin";
+    }
 
     @GetMapping("/librarian")
-    public String librarian() {return "librarian";}
+    public String librarian() {
+        return "librarian";
+    }
 }
