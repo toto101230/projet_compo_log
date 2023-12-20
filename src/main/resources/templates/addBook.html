@@ -25,23 +25,27 @@
   </div>
   <div>
       <label for="pageNb">Nombre de pages:</label>
-      <input name="pageNb" id="pageNb" value="">
+      <input type="number" name="pageNb" id="pageNb" value="">
   </div>
   <div>
       <label for="state">Etat:</label>
-      <input name="state" id="state" value="">
+
+      <select name="state" id="state">
+          <option value="">--Please choose an option--</option>
+          <option value="Neuf">Neuf</option>
+          <option value="Très bon">Très bon</option>
+          <option value="Bon">Bon</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Mauvais">Mauvais</option>
+      </select>
   </div>
   <div>
       <label for="price">Prix:</label>
-      <input name="price" id="price" value="">
+      <input type="number"  name="price" id="price" value="">
   </div>
   <div>
     <label for="shippingPrice">Frais de port:</label>
-    <input name="shippingPrice" id="shippingPrice" value="">
-  </div>
-  <div>
-      <label for="note">Note:</label>
-      <input name="note" id="note" value="">
+    <input type="number" name="shippingPrice" id="shippingPrice" value="">
   </div>
 
   <div>

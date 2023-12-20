@@ -19,12 +19,11 @@ public class Book {
     private String state;
     private Integer price;
     private Integer shippingPrice;
-    private Integer note;
 
     public Book() {
     }
 
-    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, Integer note) {
+    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice) {
         this.title = title;
         this.author = author;
         this.editor = editor;
@@ -32,7 +31,6 @@ public class Book {
         this.state = state;
         this.price = price;
         this.shippingPrice = shippingPrice;
-        this.note = note;
     }
 
     public Integer getId() {
@@ -97,13 +95,5 @@ public class Book {
 
     public void setShippingPrice(Integer shippingPrice) {
         this.shippingPrice = shippingPrice;
-    }
-
-    public Integer getNote() {
-        return note;
-    }
-
-    public void setNote(Integer note) {
-        this.note = note;
     }
 }

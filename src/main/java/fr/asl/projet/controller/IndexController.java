@@ -24,8 +24,8 @@ public class IndexController {
     }
 
     @PostMapping("/addBook")
-    public String addBook(@RequestParam String title, @RequestParam String author, @RequestParam String editor, @RequestParam Integer pageNb, @RequestParam String state, @RequestParam Integer price, @RequestParam Integer shippingPrice, @RequestParam Integer note) {
-        bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice, note));
+    public String addBook(@RequestParam String title, @RequestParam String author, @RequestParam String editor, @RequestParam Integer pageNb, @RequestParam String state, @RequestParam Integer price, @RequestParam Integer shippingPrice) {
+        bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice));
         return "redirect:/";
     }
 
