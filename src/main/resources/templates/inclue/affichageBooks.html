@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="affichageBooks">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col">Auteur</th>
+            <th scope="col">Editeur</th>
+            <th scope="col">Nombre de pages</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Frais de port</th>
+            <th scope="col">Catégorie</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.editor}"></td>
+            <td th:text="${book.pageNb}"></td>
+            <td th:text="${book.state}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.shippingPrice}"></td>
+            <td>
+                <span th:each="category : ${book.categories}" th:text="${category.name} + ' '"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

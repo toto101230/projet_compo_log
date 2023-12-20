@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Ouvrage</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
 <body>
     <h1>Ajouter un ouvrage</h1>
@@ -47,6 +50,12 @@
             <label for="shippingPrice">Frais de port:</label>
             <input type="number" name="shippingPrice" id="shippingPrice" value="">
         </div>
+        <div>
+            <label for="categories">Catégorie:</label>
+            <select id="categories" name="categories" multiple>
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+        </div>
 
         <div>
             <button>Ajouter un ouvrage</button>
@@ -57,6 +66,14 @@
     <form action="/" method="GET">
         <button>Retour à la page d'accueil</button>
     </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#categories').select2({
+                placeholder: "Choisir une catégorie"
+            });
+        });
+    </script>
 
 </body>
 </html>

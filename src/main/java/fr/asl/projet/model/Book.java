@@ -1,10 +1,8 @@
 package fr.asl.projet.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Book {
@@ -19,11 +17,14 @@ public class Book {
     private String state;
     private Integer price;
     private Integer shippingPrice;
+    @ManyToMany
+    private List<Category> categories;
+
 
     public Book() {
     }
 
-    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice) {
+    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Category> categories) {
         this.title = title;
         this.author = author;
         this.editor = editor;
@@ -31,6 +32,7 @@ public class Book {
         this.state = state;
         this.price = price;
         this.shippingPrice = shippingPrice;
+        this.categories = categories;
     }
 
     public Integer getId() {
@@ -95,5 +97,13 @@ public class Book {
 
     public void setShippingPrice(Integer shippingPrice) {
         this.shippingPrice = shippingPrice;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }
