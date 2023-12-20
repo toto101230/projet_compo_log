@@ -1,0 +1,62 @@
+<!-- src/main/resources/templates/addBook.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter un Ouvrage</title>
+</head>
+<body>
+<h1>Ajouter un ouvrage</h1>
+<form action="/addBook" method="POST">
+  <p>Ajoutons un ouvrage</p>
+
+  <div>
+      <label for="title">Titre:</label>
+      <input name="title" id="title" value="">
+  </div>
+  <div>
+      <label for="author">Auteur:</label>
+      <input name="author" id="author" value="">
+  </div>
+  <div>
+      <label for="editor">Editeur:</label>
+      <input name="editor" id="editor" value="">
+  </div>
+  <div>
+      <label for="pageNb">Nombre de pages:</label>
+      <input type="number" name="pageNb" id="pageNb" value="">
+  </div>
+  <div>
+      <label for="state">Etat:</label>
+
+      <select name="state" id="state">
+          <option value="">--Please choose an option--</option>
+          <option value="Neuf">Neuf</option>
+          <option value="Très bon">Très bon</option>
+          <option value="Bon">Bon</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Mauvais">Mauvais</option>
+      </select>
+  </div>
+  <div>
+      <label for="price">Prix:</label>
+      <input type="number"  name="price" id="price" value="">
+  </div>
+  <div>
+    <label for="shippingPrice">Frais de port:</label>
+    <input type="number" name="shippingPrice" id="shippingPrice" value="">
+  </div>
+
+  <div>
+    <button>Ajouter un ouvrage</button>
+  </div>
+
+</form>
+
+<form action="/" method="GET">
+    <button>Retour à la page d'accueil</button>
+</form>
+
+</body>
+</html>

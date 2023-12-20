@@ -1,37 +1,20 @@
 package fr.asl.projet.controller;
 
-import fr.asl.projet.model.Client;
-import fr.asl.projet.model.ClientRepository;
+import fr.asl.projet.model.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
     @Autowired
-    private ClientRepository clientRepository;
+    private BookRepository bookRepository;
 
-    @PostMapping("/add")
-    @ResponseBody
-    public String add(@RequestParam String login, @RequestParam String password) {
-        clientRepository.save(new Client(login, password, "nom", "adresse", "mail"));
-        return "index";
-    }
-
-    @GetMapping("/list")
-    @ResponseBody
-    public Iterable<Client> all() {
-        return clientRepository.findAll();
-    }
-
-    @GetMapping("/find/{id}")
-    @ResponseBody
-    public Client find(@PathVariable Integer id) {
-        return clientRepository.findById(id).get();
-    }
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("books", bookRepository.findAll());
         return "index";
     }
 
@@ -39,4 +22,10 @@ public class IndexController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/admin")
+    public String admin() {return "admin";}
+
+    @GetMapping("/librarian")
+    public String librarian() {return "librarian";}
 }
