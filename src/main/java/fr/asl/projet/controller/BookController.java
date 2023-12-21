@@ -1,9 +1,6 @@
 package fr.asl.projet.controller;
 
-import fr.asl.projet.model.Book;
-import fr.asl.projet.model.BookRepository;
-import fr.asl.projet.model.Category;
-import fr.asl.projet.model.CategoryRepository;
+import fr.asl.projet.service.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,24 +13,19 @@ import java.util.List;
 @Controller
 public class BookController {
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private Facade facade;
 
     @PostMapping("/addBook")
     public String addBook(@RequestParam String title, @RequestParam String author, @RequestParam String editor,
                           @RequestParam Integer pageNb, @RequestParam String state, @RequestParam Integer price,
                           @RequestParam Integer shippingPrice, @RequestParam List<Integer> categories) {
-        List<Category> categoriesList = (List<Category>) categoryRepository.findAllById(categories);
-        System.out.println(categoriesList);
-        bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice, categoriesList));
+        facade.createBook(title, author, editor, pageNb, state, price, shippingPrice, categories);
         return "redirect:/";
     }
 
     @GetMapping("/addBook")
     public String addBook(Model model) {
-        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("categories", facade.findAllCategories());
         return "addBook";
     }
 }
