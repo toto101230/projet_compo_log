@@ -19,6 +19,8 @@ public class CommandController {
     private CommandRepository commandRepository;
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private CommandBookRepository commandBookRepository;
 
     @PostMapping("/cart")
     public String cart(Model model, @RequestParam List<Integer> ids) {
@@ -77,6 +79,7 @@ public class CommandController {
         for (Map.Entry<Book, Integer> entry : createBooks(toList(ids)).entrySet()) {
             CommandBook commandBook = new CommandBook(command, entry.getKey(), entry.getValue());
             command.addBook(commandBook);
+            commandBookRepository.save(commandBook);
         }
         commandRepository.save(command);
         return "command";

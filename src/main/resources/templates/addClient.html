@@ -1,13 +1,15 @@
-<!-- src/main/resources/templates/addClient.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
+    <title>Amazon-like</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
+<header th:insert="~{header :: header}"></header>
     <h1>Inscription</h1>
+    <p th:text="${error}" class="alert alert-danger" th:if="${error}"></p>
     <form th:action="@{/addClient}" method="POST">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 

@@ -27,7 +27,7 @@ public class AdminController {
     }
 
     @PostMapping("/validateLibrarian")
-    public String validateLibrarian(@RequestParam String login) {
+    public String validateLibrarian(Model model, @RequestParam String login) {
         LibrarianRegistration librarian = librarianRegistrationRepository.findByLogin(login);
         ClientDTO librarianDTO = new ClientDTO();
         librarianDTO.setLogin(login);
@@ -36,7 +36,16 @@ public class AdminController {
         librarianDTO.setAddress(librarian.getAddress());
         librarianDTO.setMail(librarian.getMail());
         clientService.registerNewAccount(librarianDTO, "ROLE_LIBRARIAN");
+        librarianRegistrationRepository.delete(librarian);
+        model.addAttribute("librarians", librarianRegistrationRepository.findAll());
+        return "validateLibrarian";
+    }
 
-        return "redirect:/";
+    @PostMapping("/deleteLibrarian")
+    public String deleteLibrarian(Model model, @RequestParam String login) {
+        LibrarianRegistration librarian = librarianRegistrationRepository.findByLogin(login);
+        librarianRegistrationRepository.delete(librarian);
+        model.addAttribute("librarians", librarianRegistrationRepository.findAll());
+        return "validateLibrarian";
     }
 }

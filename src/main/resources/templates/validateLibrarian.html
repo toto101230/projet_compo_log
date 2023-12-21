@@ -1,34 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Amazon-like</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
-
-Inscription de libraires en attente de validation :
-<table>
-    <tr>
-        <th>login</th>
-        <th>name</th>
-        <th>address</th>
-        <th>mail</th>
-        <th>validate</th>
-    </tr>
-    <tr th:each="librarian : ${librarians}">
-        <td th:text="${librarian.login}"></td>
-        <td th:text="${librarian.name}"></td>
-        <td th:text="${librarian.address}"></td>
-        <td th:text="${librarian.mail}"></td>
-        <td>
-            <form th:action="@{/validateLibrarian}" method="POST">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <input type="hidden" name="login" th:value="${librarian.login}"/>
-                <button>Valider</button>
-            </form>
-        </td>
-    </tr>
-</table>
-
+<header th:insert="~{header :: header}"></header>
+    Inscription de libraires en attente de validation :
+    <table>
+        <tr>
+            <th>login</th>
+            <th>name</th>
+            <th>address</th>
+            <th>mail</th>
+            <th>validate</th>
+        </tr>
+        <tr th:each="librarian : ${librarians}">
+            <td th:text="${librarian.login}"></td>
+            <td th:text="${librarian.name}"></td>
+            <td th:text="${librarian.address}"></td>
+            <td th:text="${librarian.mail}"></td>
+            <td>
+                <form th:action="@{/validateLibrarian}" method="POST">
+                    <input type="hidden" name="login" th:value="${librarian.login}"/>
+                    <button>Valider</button>
+                </form>
+                <form th:action="@{/deleteLibrarian}" method="POST">
+                    <input type="hidden" name="login" th:value="${librarian.login}"/>
+                    <button>Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

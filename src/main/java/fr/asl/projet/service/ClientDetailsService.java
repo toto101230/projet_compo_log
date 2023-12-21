@@ -2,9 +2,7 @@ package fr.asl.projet.service;
 
 import fr.asl.projet.model.Client;
 import fr.asl.projet.model.ClientRepository;
-import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +24,7 @@ public class ClientDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws RuntimeException {
         Client client = clientRepository.findByLogin(login);
         if (client == null) {
-            throw new RuntimeException("Client not found");
+            throw new RuntimeException("Client not found"); //todo a changer
         }
         return new User(client.getLogin(), passwordEncoder().encode(client.getPassword()), getAuthorities(client.getRole()));
     }

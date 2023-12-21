@@ -1,11 +1,13 @@
 package fr.asl.projet.controller;
+
+import fr.asl.projet.model.Client;
 import fr.asl.projet.model.ClientDTO;
 import fr.asl.projet.model.ClientRepository;
 import fr.asl.projet.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import fr.asl.projet.model.Client;
 
 @Controller
 public class ClientController {
@@ -16,7 +18,12 @@ public class ClientController {
     private ClientService clientService;
 
     @PostMapping("/addClient")
-    public String addClient(@RequestParam String login, @RequestParam String password, @RequestParam String name, @RequestParam String address, @RequestParam String mail) {
+    public String addClient(Model model, @RequestParam String login, @RequestParam String password, @RequestParam String name, @RequestParam String address, @RequestParam String mail) {
+        if(clientRepository.findByLogin(login) != null) {
+            model.addAttribute("error", "Nom d'utilisateur déjà utilisé");
+            return "addClient";
+        }
+
         ClientDTO clientDTO = new ClientDTO();
         clientDTO.setLogin(login);
         clientDTO.setPassword(password);
