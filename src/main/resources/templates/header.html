@@ -2,43 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <body>
 <header th:fragment="header">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">Amazon zero sucres</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Amazon zero sucres</a>
 
-            <form action="/addBook" method="GET">
-                <button>Page d'ajout des ouvrages</button>
+        <form action="/addBook" method="GET">
+            <button>Page d'ajout des ouvrages</button>
+        </form>
+
+        <form action="/addClient" method="GET">
+            <button>Page d'ajout des clients</button>
+        </form>
+
+        <div class="ml-auto">
+            <form th:action="@{/search}" method="POST">
+                <label>
+                    <input type="text" name="search" placeholder="Rechercher un ouvrage" th:value="${search}">
+                </label>
+                <button type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
             </form>
+        </div>
 
-            <form action="/addClient" method="GET">
-                <button>Page d'ajout des clients</button>
+        <div class="ml-auto">
+            <form th:action="@{/cart}" method="POST" id="formCart">
+                <input type="hidden" id="ids" name="ids">
+                <button>
+                    <span id="cartSize"></span>
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
             </form>
-
-            <div class="ml-auto">
-                <form th:action="@{/search}" method="POST">
-                    <label>
-                        <input type="text" name="search" placeholder="Rechercher un ouvrage" th:value="${search}">
-                    </label>
-                    <button type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <form th:action="@{/logout}" method="post">
+                    <button>Se déconnecter</button>
                 </form>
             </div>
-
-            <div class="ml-auto">
-                <div th:if="${#authorization.expression('isAuthenticated()')}">
-                    <form th:action="@{/logout}" method="post">
-                        <button>Se déconnecter</button>
-                    </form>
-                </div>
-                <div th:if="${#authorization.expression('!isAuthenticated()')}">
-                    <form action="/login" method="GET">
-                        <button>Se connecter</button>
-                    </form>
-                </div>
+            <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                <form action="/login" method="GET">
+                    <button>Se connecter</button>
+                </form>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+    <script>
+        function majSizeCart(){
+            let ids = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cartSize").innerHTML = ids.length;
+            document.getElementById("ids").value = ids;
+        }
+        majSizeCart();
+    </script>
 </header>
 </body>
 </html>

@@ -2,7 +2,6 @@ package fr.asl.projet.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,6 +16,8 @@ public class Client {
     private String address;
     private String mail;
     private String role;
+    @OneToMany
+    private List<Command> commands;
 
     public Client() {
     }
@@ -84,5 +85,13 @@ public class Client {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Command> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(List<Command> commands) {
+        this.commands = commands;
     }
 }

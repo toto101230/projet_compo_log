@@ -8,12 +8,21 @@
 </head>
 <body>
     <header th:insert="~{header :: header}"></header>
-    <div th:text="${error}">
-        Error
-    </div>
-    <div th:text="${code}">
-        Code
+    <h1>Commande</h1>
+    <p id="time">Nous interrogeons votre banque...</p>
+    <div id="time2" class="invisible">
+        <form th:action="@{/}" method="GET">
+            <button type="submit" class="btn btn-primary">Retour à l'accueil</button>
+        </form>
     </div>
 
+    <script>
+        setTimeout(function() {
+            document.getElementById("time").innerHTML = "Votre commande a bien été prise en compte !";
+            document.getElementById("time2").classList.remove("invisible");
+            localStorage.removeItem("cart");
+            majSizeCart();
+        }, 3000);
+    </script>
 </body>
 </html>

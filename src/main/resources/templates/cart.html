@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Amazon-like</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <header th:insert="~{header :: header}"></header>
+    <h1>Panier</h1>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Titre</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Editeur</th>
+                <th scope="col">Nombre de pages</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Frais de port</th>
+                <th scope="col">Catégorie</th>
+                <th scope="col">Quantité</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.key.title}"></td>
+                <td th:text="${book.key.author}"></td>
+                <td th:text="${book.key.editor}"></td>
+                <td th:text="${book.key.pageNb}"></td>
+                <td th:text="${book.key.state}"></td>
+                <td th:text="${book.key.price}"></td>
+                <td th:text="${book.key.shippingPrice}"></td>
+                <td>
+                    <span th:each="category : ${book.key.categories}" th:text="${category.name} + ' '"></span>
+                </td>
+                <td th:text="${book.value}"></td>
+                <td>
+                    <button th:onclick="'removeToCart(' + ${book.key.id} + ')'">Supprimer 1 exemplaire</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${books.size() > 0}">
+        <p>Prix total : <span th:text="${totalPrice}"></span>€</p>
+        <p>Frais de port : <span th:text="${totalShippingPrice}"></span>€</p>
+        <p>Prix total avec frais de port : <span th:text="${totalPrice + totalShippingPrice}"></span>€</p>
+        <form th:action="@{/command}" method="POST">
+            <input type="hidden" name="ids" th:value="${ids}">
+            <input type="hidden" name="totalPrice" th:value="${totalPrice}">
+            <input type="hidden" name="totalShippingPrice" th:value="${totalShippingPrice}">
+            <button type="submit" class="btn btn-primary">Commander</button>
+        </form>
+    </div>
+
+    <script>
+        function removeToCart(id){
+            let ids = JSON.parse(localStorage.getItem("cart")) || [];
+            if (ids.includes(id)){
+                ids.splice(ids.indexOf(id), 1);
+            }
+            localStorage.setItem("cart", JSON.stringify(ids));
+            majSizeCart();
+            document.getElementById("formCart").submit();
+        }
+    </script>
+</body>
+</html>
