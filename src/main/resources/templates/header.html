@@ -5,12 +5,20 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">Amazon zero sucres</a>
 
-        <form action="/addBook" method="GET">
-            <button>Page d'ajout des ouvrages</button>
-        </form>
+        <div th:if="${#authorization.expression('hasRole(''ROLE_LIBRARIAN'')')}">
+            <form action="/addBook" method="GET">
+                <button>Page d'ajout des ouvrages</button>
+            </form>
+        </div>
+
+        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+            <form action="/validateLibrarian" method="GET">
+                <button>Validation des libraires</button>
+            </form>
+        </div>
 
         <form action="/addClient" method="GET">
-            <button>Page d'ajout des clients</button>
+            <button>Page d'inscription</button>
         </form>
 
         <div class="ml-auto">

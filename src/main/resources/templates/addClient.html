@@ -4,20 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Client</title>
+    <title>Inscription</title>
 </head>
 <body>
-    <h1>Ajouter un Client</h1>
+    <h1>Inscription</h1>
     <form th:action="@{/addClient}" method="POST">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-        <p>Ajoutons un client</p>
 
         <div>
             <label for="login">Nom d'utlisateur:</label>
             <input name="login" id="login" value="">
         </div>
         <div>
-            <label for="password">Mot de passe</label>
+            <label for="password">Mot de passe:</label>
             <input name="password" id="password" value="">
         </div>
         <div>
@@ -33,8 +32,11 @@
             <input name="mail" id="mail" value="">
         </div>
         <div>
-            <button>Ajouter</button>
+            <button>S'inscrire</button>
         </div>
+    </form>
+    <form action="/addLibrarian" method="GET">
+        <button>Formulaire pour les libraires</button>
     </form>
     <form action="/" method="GET">
         <button>Retour à la page d'accueil</button>

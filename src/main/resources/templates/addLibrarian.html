@@ -1,0 +1,41 @@
+<!-- src/main/resources/templates/addLibrarian.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+</head>
+<body>
+<h1>Inscription en tant que Libraire</h1>
+<form th:action="@{/addLibrarian}" method="POST">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    <div>
+        <label for="login">Nom:</label>
+        <input name="login" id="login" value="">
+    </div>
+    <div>
+        <label for="password">Mot de passe:</label>
+        <input name="password" id="password" value="">
+    </div>
+    <div>
+        <label for="name">Nom:</label>
+        <input name="name" id="name" value="">
+    </div>
+    <div>
+        <label for="address">Adresse:</label>
+        <input name="address" id="address" value="">
+    </div>
+    <div>
+        <label for="mail">Mail:</label>
+        <input name="mail" id="mail" value="">
+    </div>
+    <div>
+        <button>S'inscrire</button>
+    </div>
+</form>
+<form action="/" method="GET">
+    <button>Retour à la page d'accueil</button>
+</form>
+</body>
+</html>
