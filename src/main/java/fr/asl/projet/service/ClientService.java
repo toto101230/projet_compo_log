@@ -13,7 +13,7 @@ public class ClientService{
     @Autowired
     private ClientRepository clientRepository;
 
-    public Client registerNewClientAccount(ClientDTO clientDto){
+    public Client registerNewAccount(ClientDTO clientDto, String role) {
 
         Client client = new Client();
         client.setLogin(clientDto.getLogin());
@@ -21,7 +21,7 @@ public class ClientService{
         client.setName(clientDto.getName());
         client.setAddress(clientDto.getAddress());
         client.setMail(clientDto.getMail());
-        client.setRole("ROLE_USER");
+        client.setRole(role);
 
         return clientRepository.save(client);
     }

@@ -22,9 +22,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/error", "/cart", "/search", "/searchAdvanced", "addClient").permitAll()
-                .requestMatchers("/admin").hasRole("ADMIN")
-                .requestMatchers("/librarian").hasRole("LIBRARIAN") //todo a voir
+                .requestMatchers("/", "/error", "/cart", "/search", "/searchAdvanced", "/addClient", "/addLibrarian").permitAll()
+                .requestMatchers("validateLibrarian").hasRole("ADMIN")
+                .requestMatchers("/addBook").hasRole("LIBRARIAN")
                 .anyRequest().authenticated()
         ).formLogin((form) -> form
                 .loginPage("/login")

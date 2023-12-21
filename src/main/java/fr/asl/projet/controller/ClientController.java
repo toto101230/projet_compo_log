@@ -1,12 +1,8 @@
 package fr.asl.projet.controller;
-
 import fr.asl.projet.model.ClientDTO;
 import fr.asl.projet.model.ClientRepository;
-import fr.asl.projet.service.ClientDetailsService;
 import fr.asl.projet.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import fr.asl.projet.model.Client;
@@ -27,7 +23,7 @@ public class ClientController {
         clientDTO.setName(name);
         clientDTO.setAddress(address);
         clientDTO.setMail(mail);
-        clientService.registerNewClientAccount(clientDTO);
+        clientService.registerNewAccount(clientDTO, "ROLE_ADMIN");
 
         return "redirect:/";
     }
