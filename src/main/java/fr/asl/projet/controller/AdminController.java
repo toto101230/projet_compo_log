@@ -15,21 +15,21 @@ public class AdminController {
 
     @GetMapping("/validateLibrarian")
     public String validateLibrarian(Model model) {
-        model.addAttribute("librarians", facade.findAllLibrarians());
+        model.addAttribute("librarians", facade.findAllLibrariansNoValidated());
         return "validateLibrarian";
     }
 
     @PostMapping("/validateLibrarian")
     public String validateLibrarian(Model model, @RequestParam String login) {
         facade.validateLibrarian(login);
-        model.addAttribute("librarians", facade.findAllLibrarians());
+        model.addAttribute("librarians", facade.findAllLibrariansNoValidated());
         return "validateLibrarian";
     }
 
     @PostMapping("/deleteLibrarian")
     public String deleteLibrarian(Model model, @RequestParam String login) {
         facade.deleteLibrarian(login);
-        model.addAttribute("librarians", facade.findAllLibrarians());
+        model.addAttribute("librarians", facade.findAllLibrariansNoValidated());
         return "validateLibrarian";
     }
 }

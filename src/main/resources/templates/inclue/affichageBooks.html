@@ -17,6 +17,7 @@
                 <th scope="col">Prix</th>
                 <th scope="col">Frais de port</th>
                 <th scope="col">Catégorie</th>
+                <th scope="col">Note du libraire</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
                 <td>
                     <span th:each="category : ${book.categories}" th:text="${category.name} + ' '"></span>
                 </td>
+                <td th:text="${book.librarian.note}"></td>
                 <td>
                     <button th:onclick="'addToCart(' + ${book.id} + ')'">Ajouter au panier</button>
                 </td>

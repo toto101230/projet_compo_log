@@ -3,7 +3,9 @@ package fr.asl.projet.service;
 import fr.asl.projet.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -23,8 +25,8 @@ public class Facade {
     @Autowired
     private CommandBookRepository commandBookRepository;
 
-    public Iterable<LibrarianRegistration> findAllLibrarians() {
-        return librarianRegistrationRepository.findAll();
+    public Iterable<LibrarianRegistration> findAllLibrariansNoValidated() {
+        return librarianRegistrationRepository.findAllByValidated(false);
     }
 
     public void validateLibrarian(String login) {
@@ -36,7 +38,8 @@ public class Facade {
         librarianDTO.setAddress(librarian.getAddress());
         librarianDTO.setMail(librarian.getMail());
         clientService.registerNewAccount(librarianDTO, "ROLE_LIBRARIAN");
-        librarianRegistrationRepository.delete(librarian);
+        librarian.setValidated(true);
+        librarianRegistrationRepository.save(librarian);
     }
 
     public void deleteLibrarian(String login) {
@@ -44,10 +47,11 @@ public class Facade {
         librarianRegistrationRepository.delete(librarian);
     }
 
-    public void createBook(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Integer> categories) {
+    @Transactional
+    public void addBook(String login, String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Integer> categories) {
         List<Category> categoriesList = (List<Category>) categoryRepository.findAllById(categories);
-        System.out.println(categoriesList);
-        bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice, categoriesList));
+        LibrarianRegistration librarian = librarianRegistrationRepository.findByLogin(login);
+        bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice, categoriesList, librarian));
     }
 
     public Iterable<Category> findAllCategories() {
@@ -109,7 +113,8 @@ public class Facade {
 
     public void createCommand(String username, String ids, int totalPrice, int totalShippingPrice) {
         Client client = clientRepository.findByLogin(username);
-        Command command = new Command(client, totalPrice, totalShippingPrice);
+        String strDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        Command command = new Command(client, totalPrice, totalShippingPrice, strDate);
         commandRepository.save(command);
         for (Map.Entry<Book, Integer> entry : createBooks(toList(ids)).entrySet()) {
             CommandBook commandBook = new CommandBook(command, entry.getKey(), entry.getValue());
@@ -133,8 +138,12 @@ public class Facade {
         return bookRepository.findAll();
     }
 
-    public void createLibrarian(String login, String password, String name, String address, String mail) {
+    public boolean createLibrarian(String login, String password, String name, String address, String mail) {
+        if (clientRepository.findByLogin(login) != null) {
+            return false;
+        }
         librarianRegistrationRepository.save(new LibrarianRegistration(login, password, name, address, mail, "ROLE_LIBRARIAN"));
+        return true;
     }
 
     public Iterable<Book> findBooksByTitle(String search) {
@@ -161,5 +170,23 @@ public class Facade {
             }
         }
         return booksByCategories;
+    }
+
+    public Client findClientByLogin(String username) {
+        Client client = clientRepository.findByLogin(username);
+        Client clientDTO = new Client();
+        clientDTO.setLogin(client.getLogin());
+        clientDTO.setName(client.getName());
+        clientDTO.setAddress(client.getAddress());
+        clientDTO.setMail(client.getMail());
+        return clientDTO;
+    }
+
+    public List<Command> findCommandesByClientLogin(String username) {
+        return commandRepository.findAllByClient(clientRepository.findByLogin(username));
+    }
+
+    public void createCategory(String name) {
+        categoryRepository.save(new Category(name));
     }
 }

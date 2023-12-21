@@ -23,7 +23,7 @@
             </form>
         </div>
 
-        <div class="ml-auto">
+        <div class="mx-auto">
             <form th:action="@{/search}" method="POST">
                 <label>
                     <input type="text" name="search" placeholder="Rechercher un ouvrage" th:value="${search}">
@@ -33,30 +33,32 @@
                 </button>
             </form>
         </div>
-        <div class="ml-auto">
-            <div class="d-flex">
-                <form th:action="@{/cart}" method="POST" id="formCart" class="pr-3">
-                    <input type="hidden" id="ids" name="ids">
-                    <button>
-                        <span id="cartSize"></span>
-                        <i class="fas fa-shopping-cart"></i>
-                    </button>
+        <!--        coller complement à gauche avec bootstrap-->
+        <div class="d-flex me-3">
+            <form th:action="@{/cart}" method="POST" id="formCart" class="me-2">
+                <input type="hidden" id="ids" name="ids">
+                <button>
+                    <span id="cartSize"></span>
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
+            </form>
+            <div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex">
+                <form th:action="@{/account}" method="GET" class="pr-2">
+                    <button>Mon compte</button>
                 </form>
-                <div th:if="${#authorization.expression('isAuthenticated()')}">
-                    <form th:action="@{/logout}" method="post">
-                        <button>Se déconnecter</button>
-                    </form>
-                </div>
-                <div th:if="${#authorization.expression('!isAuthenticated()')}">
-                    <form action="/login" method="GET">
-                        <button>Se connecter</button>
-                    </form>
-                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button>Se déconnecter</button>
+                </form>
+            </div>
+            <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                <form action="/login" method="GET">
+                    <button>Se connecter</button>
+                </form>
             </div>
         </div>
     </nav>
     <script>
-        function majSizeCart(){
+        function majSizeCart() {
             let ids = JSON.parse(localStorage.getItem("cart")) || [];
             document.getElementById("cartSize").innerHTML = ids.length;
             document.getElementById("ids").value = ids;

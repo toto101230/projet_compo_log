@@ -3,6 +3,7 @@ package fr.asl.projet.controller;
 import fr.asl.projet.service.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,9 +14,14 @@ public class LibrarianController {
     private Facade facade;
 
     @PostMapping("/addLibrarian")
-    public String addLibrarian(@RequestParam String login, @RequestParam String password, @RequestParam String name, @RequestParam String address, @RequestParam String mail) {
-        facade.createLibrarian(login, password, name, address, mail);
-        return "redirect:/";
+    public String addLibrarian(Model model, @RequestParam String login, @RequestParam String password, @RequestParam String name, @RequestParam String address, @RequestParam String mail) {
+        boolean succes = facade.createLibrarian(login, password, name, address, mail);
+        if (succes) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("error", "Nom d'utilisateur déjà utilisé");
+            return "addLibrarian";
+        }
     }
 
     @GetMapping("/addLibrarian")

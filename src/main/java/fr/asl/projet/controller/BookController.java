@@ -2,6 +2,8 @@ package fr.asl.projet.controller;
 
 import fr.asl.projet.service.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,11 @@ public class BookController {
     private Facade facade;
 
     @PostMapping("/addBook")
-    public String addBook(@RequestParam String title, @RequestParam String author, @RequestParam String editor,
+    public String addBook(@AuthenticationPrincipal UserDetails userDetails,
+                          @RequestParam String title, @RequestParam String author, @RequestParam String editor,
                           @RequestParam Integer pageNb, @RequestParam String state, @RequestParam Integer price,
                           @RequestParam Integer shippingPrice, @RequestParam List<Integer> categories) {
-        facade.createBook(title, author, editor, pageNb, state, price, shippingPrice, categories);
+        facade.addBook(userDetails.getUsername(), title, author, editor, pageNb, state, price, shippingPrice, categories);
         return "redirect:/";
     }
 

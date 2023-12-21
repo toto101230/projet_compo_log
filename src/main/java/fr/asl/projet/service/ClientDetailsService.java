@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class ClientDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws RuntimeException {
         Client client = clientRepository.findByLogin(login);
         if (client == null) {
-            throw new RuntimeException("Client not found"); //todo a changer
+            throw new UsernameNotFoundException("User not found with login: " + login);
         }
         return new User(client.getLogin(), passwordEncoder().encode(client.getPassword()), getAuthorities(client.getRole()));
     }

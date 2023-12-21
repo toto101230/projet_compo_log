@@ -22,6 +22,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/login").anonymous()
                 .requestMatchers("/", "/error", "/cart", "/search", "/searchAdvanced", "/addClient", "/addLibrarian").permitAll()
                 .requestMatchers("validateLibrarian").hasRole("ADMIN")
                 .requestMatchers("/addBook").hasRole("LIBRARIAN")

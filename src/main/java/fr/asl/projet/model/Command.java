@@ -18,17 +18,20 @@ public class Command {
     private List<CommandBook> books;
 
     private int totalPrice;
-
     private int totalShippingPrice;
+    private String date;
+    private boolean status;
 
     public Command() {
     }
 
-    public Command(Client client, int totalPrice, int totalShippingPrice) {
+    public Command(Client client, int totalPrice, int totalShippingPrice, String date) {
         this.client = client;
         this.books = new ArrayList<>();
         this.totalPrice = totalPrice;
         this.totalShippingPrice = totalShippingPrice;
+        this.date = date;
+        this.status = false;
     }
 
     public Integer getId() {
@@ -73,5 +76,21 @@ public class Command {
 
     public void addBook(CommandBook book) {
         this.books.add(book);
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

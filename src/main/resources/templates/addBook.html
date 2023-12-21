@@ -3,7 +3,7 @@
 <head>
     <title>Amazon-like</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -14,28 +14,25 @@
     <header th:insert="~{header :: header}"></header>
     <h1>Ajouter un ouvrage</h1>
     <form th:action="@{/addBook}" method="POST">
-        <p>Ajoutons un ouvrage</p>
-
         <div>
             <label for="title">Titre:</label>
-            <input name="title" id="title" value="">
+            <input type="text" name="title" id="title" value="" required>
         </div>
         <div>
             <label for="author">Auteur:</label>
-            <input name="author" id="author" value="">
+            <input type="text" name="author" id="author" value="" required>
         </div>
         <div>
             <label for="editor">Editeur:</label>
-            <input name="editor" id="editor" value="">
+            <input type="text" name="editor" id="editor" value="" required>
         </div>
         <div>
             <label for="pageNb">Nombre de pages:</label>
-            <input type="number" name="pageNb" id="pageNb" value="">
+            <input type="number" name="pageNb" id="pageNb" value="" required>
         </div>
         <div>
             <label for="state">Etat:</label>
-
-            <select name="state" id="state">
+            <select name="state" id="state" required>
                 <option value="">--Please choose an option--</option>
                 <option value="Neuf">Neuf</option>
                 <option value="Très bon">Très bon</option>
@@ -46,15 +43,15 @@
         </div>
         <div>
             <label for="price">Prix:</label>
-            <input type="number" name="price" id="price" value="">
+            <input type="number" name="price" id="price" value="" required>
         </div>
         <div>
             <label for="shippingPrice">Frais de port:</label>
-            <input type="number" name="shippingPrice" id="shippingPrice" value="">
+            <input type="number" name="shippingPrice" id="shippingPrice" value="" required>
         </div>
         <div>
             <label for="categories">Catégorie:</label>
-            <select id="categories" name="categories" multiple>
+            <select id="categories" name="categories" multiple required>
                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
             </select>
         </div>

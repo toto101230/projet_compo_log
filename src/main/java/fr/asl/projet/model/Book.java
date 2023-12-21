@@ -19,12 +19,13 @@ public class Book {
     private Integer shippingPrice;
     @ManyToMany
     private List<Category> categories;
-
+    @ManyToOne
+    private LibrarianRegistration librarian;
 
     public Book() {
     }
 
-    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Category> categories) {
+    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Category> categories, LibrarianRegistration librarian) {
         this.title = title;
         this.author = author;
         this.editor = editor;
@@ -33,6 +34,7 @@ public class Book {
         this.price = price;
         this.shippingPrice = shippingPrice;
         this.categories = categories;
+        this.librarian = librarian;
     }
 
     public Integer getId() {
@@ -105,5 +107,13 @@ public class Book {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public LibrarianRegistration getLibrarian() {
+        return librarian;
+    }
+
+    public void setLibrarian(LibrarianRegistration librarian) {
+        this.librarian = librarian;
     }
 }
