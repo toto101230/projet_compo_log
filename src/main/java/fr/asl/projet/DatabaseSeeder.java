@@ -1,9 +1,7 @@
 package fr.asl.projet;
 
-import fr.asl.projet.model.Book;
-import fr.asl.projet.model.BookRepository;
-import fr.asl.projet.model.Category;
-import fr.asl.projet.model.CategoryRepository;
+import fr.asl.projet.model.*;
+import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,8 +14,13 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
     @Override
     public void run(String... args) throws Exception {
+        clientRepository.save(new Client("admin", "admin", "", "", "", "ROLE_ADMIN"));
+
         categoryRepository.save(new Category("Fantastique"));
         categoryRepository.save(new Category("Science-fiction"));
         categoryRepository.save(new Category("Histoire"));
