@@ -1,42 +1,11 @@
 package fr.asl.projet.model;
 
-import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-public class Client {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
+public class ClientDTO {
     private String login;
     private String password;
     private String name;
     private String address;
     private String mail;
-    private String role;
-
-    public Client() {
-    }
-
-    public Client(String login, String password, String name, String address, String mail, String role) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.address = address;
-        this.mail = mail;
-        this.role = role;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;
@@ -76,13 +45,5 @@ public class Client {
 
     public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }
