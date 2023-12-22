@@ -17,6 +17,12 @@ public class Command {
     @OneToMany(mappedBy = "command")
     private List<CommandBook> books;
 
+    @ManyToMany
+    private List<Librarian> librarians;
+
+    @ElementCollection
+    private List<Boolean> validations;
+
     private int totalPrice;
     private int totalShippingPrice;
     private String date;
@@ -32,6 +38,10 @@ public class Command {
         this.totalShippingPrice = totalShippingPrice;
         this.date = date;
         this.status = false;
+        this.librarians = new ArrayList<>();
+        this.validations = new ArrayList<>();
+
+
     }
 
     public Integer getId() {
@@ -92,5 +102,21 @@ public class Command {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public List<Librarian> getLibrarians() {
+        return librarians;
+    }
+
+    public void setLibrarians(List<Librarian> librarians) {
+        this.librarians = librarians;
+    }
+
+    public List<Boolean> getValidations() {
+        return validations;
+    }
+
+    public void setValidations(List<Boolean> validations) {
+        this.validations = validations;
     }
 }

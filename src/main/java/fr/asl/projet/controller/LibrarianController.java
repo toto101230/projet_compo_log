@@ -31,8 +31,8 @@ public class LibrarianController {
     }
 
     @PostMapping("/validateCommand")
-    public String validateCommand(Model model, @RequestParam int id) {
-        facade.validateCommand(id);
+    public String validateCommand(Model model, @RequestParam int idCommand, @RequestParam int idLibrarian) {
+        facade.validateCommand(idCommand, idLibrarian);
         model.addAttribute("commands", facade.findAllCommandsNoValidated());
         return "validateCommand";
     }

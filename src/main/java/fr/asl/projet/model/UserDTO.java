@@ -1,6 +1,6 @@
 package fr.asl.projet.model;
 
-public class ClientDTO {
+public class UserDTO {
     private String login;
     private String password;
     private String name;

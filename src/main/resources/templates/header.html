@@ -11,6 +11,12 @@
             </form>
         </div>
 
+        <div th:if="${#authorization.expression('hasRole(''ROLE_LIBRARIAN'')')}">
+            <form action="/validateCommand" method="GET">
+                <button>Validation des commandes</button>
+            </form>
+        </div>
+
         <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
             <form action="/validateLibrarian" method="GET">
                 <button>Validation des libraires</button>

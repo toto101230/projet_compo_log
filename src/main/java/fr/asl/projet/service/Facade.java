@@ -13,13 +13,15 @@ public class Facade {
     @Autowired
     private LibrarianRegistrationRepository librarianRegistrationRepository;
     @Autowired
-    private ClientService clientService;
+    private UserService userService;
     @Autowired
     private BookRepository bookRepository;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private LibrarianRepository librarianRepository;
     @Autowired
     private CommandRepository commandRepository;
     @Autowired
@@ -31,15 +33,15 @@ public class Facade {
 
     public void validateLibrarian(String login) {
         LibrarianRegistration librarian = librarianRegistrationRepository.findByLogin(login);
-        ClientDTO librarianDTO = new ClientDTO();
+        UserDTO librarianDTO = new UserDTO();
         librarianDTO.setLogin(login);
         librarianDTO.setPassword(librarian.getPassword());
         librarianDTO.setName(librarian.getName());
         librarianDTO.setAddress(librarian.getAddress());
         librarianDTO.setMail(librarian.getMail());
-        clientService.registerNewAccount(librarianDTO, "ROLE_LIBRARIAN");
+        userService.registerNewLibrarian(librarianDTO);
         librarian.setValidated(true);
-        librarianRegistrationRepository.save(librarian);
+        librarianRegistrationRepository.delete(librarian);
     }
 
     public void deleteLibrarian(String login) {
@@ -50,7 +52,7 @@ public class Facade {
     @Transactional
     public void addBook(String login, String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Integer> categories) {
         List<Category> categoriesList = (List<Category>) categoryRepository.findAllById(categories);
-        LibrarianRegistration librarian = librarianRegistrationRepository.findByLogin(login);
+        Librarian librarian = librarianRepository.findLibrarianByLogin(login);
         bookRepository.save(new Book(title, author, editor, pageNb, state, price, shippingPrice, categoriesList, librarian));
     }
 
@@ -59,16 +61,16 @@ public class Facade {
     }
 
     public boolean createClient(String login, String password, String name, String address, String mail) {
-        if (clientRepository.findByLogin(login) != null) {
+        if (clientRepository.findClientByLogin(login) != null || librarianRepository.findLibrarianByLogin(login) != null) {
             return false;
         }
-        ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setLogin(login);
-        clientDTO.setPassword(password);
-        clientDTO.setName(name);
-        clientDTO.setAddress(address);
-        clientDTO.setMail(mail);
-        clientService.registerNewAccount(clientDTO, "ROLE_CLIENT");
+        UserDTO userDTO = new UserDTO();
+        userDTO.setLogin(login);
+        userDTO.setPassword(password);
+        userDTO.setName(name);
+        userDTO.setAddress(address);
+        userDTO.setMail(mail);
+        userService.registerNewClient(userDTO);
         return true;
     }
 
@@ -112,7 +114,7 @@ public class Facade {
     }
 
     public void createCommand(String username, String ids, int totalPrice, int totalShippingPrice) {
-        Client client = clientRepository.findByLogin(username);
+        Client client = clientRepository.findClientByLogin(username);
         String strDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         Command command = new Command(client, totalPrice, totalShippingPrice, strDate);
         commandRepository.save(command);
@@ -121,6 +123,22 @@ public class Facade {
             command.addBook(commandBook);
             commandBookRepository.save(commandBook);
         }
+
+        //for each book in the command, we add the librarian associated to the book to the list of librarians
+        List<Librarian> librarians = new ArrayList<>();
+        for (CommandBook commandBook : command.getBooks()) {
+            if (!librarians.contains(commandBook.getBook().getLibrarian())) {
+                librarians.add(commandBook.getBook().getLibrarian());
+            }
+        }
+        command.setLibrarians(librarians);
+
+        List<Boolean> validations = new ArrayList<>();
+        for (Librarian librarian : librarians) {
+            validations.add(false);
+        }
+        command.setValidations(validations);
+
         commandRepository.save(command);
     }
 
@@ -139,7 +157,7 @@ public class Facade {
     }
 
     public boolean createLibrarian(String login, String password, String name, String address, String mail) {
-        if (clientRepository.findByLogin(login) != null) {
+        if (clientRepository.findClientByLogin(login) != null || librarianRepository.findLibrarianByLogin(login) != null) {
             return false;
         }
         librarianRegistrationRepository.save(new LibrarianRegistration(login, password, name, address, mail, "ROLE_LIBRARIAN"));
@@ -173,7 +191,7 @@ public class Facade {
     }
 
     public Client findClientByLogin(String username) {
-        Client client = clientRepository.findByLogin(username);
+        Client client = clientRepository.findClientByLogin(username);
         Client clientDTO = new Client();
         clientDTO.setLogin(client.getLogin());
         clientDTO.setName(client.getName());
@@ -183,7 +201,7 @@ public class Facade {
     }
 
     public List<Command> findCommandesByClientLogin(String username) {
-        return commandRepository.findAllByClient(clientRepository.findByLogin(username));
+        return commandRepository.findAllByClient(clientRepository.findClientByLogin(username));
     }
 
     public void createCategory(String name) {
@@ -194,9 +212,14 @@ public class Facade {
         return commandRepository.findAllByStatus(false);
     }
 
-    public void validateCommand(Integer id) {
-        Command command = commandRepository.findById(id).get();
-        command.setStatus(true);
+    public void validateCommand(Integer idCommand, Integer idLibrarian) {
+        Command command = commandRepository.findById(idCommand).get();
+        List<Boolean> validations = command.getValidations();
+        validations.set(command.getLibrarians().indexOf(librarianRepository.findLibrarianById(idLibrarian)), true);
+        command.setValidations(validations);
+        if (!validations.contains(false)) {
+            command.setStatus(true);
+        }
         commandRepository.save(command);
     }
 }

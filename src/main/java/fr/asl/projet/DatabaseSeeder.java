@@ -3,6 +3,7 @@ package fr.asl.projet;
 import fr.asl.projet.model.CategoryRepository;
 import fr.asl.projet.model.Client;
 import fr.asl.projet.model.ClientRepository;
+import fr.asl.projet.model.LibrarianRepository;
 import fr.asl.projet.service.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

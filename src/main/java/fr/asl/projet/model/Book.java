@@ -20,12 +20,12 @@ public class Book {
     @ManyToMany
     private List<Category> categories;
     @ManyToOne
-    private LibrarianRegistration librarian;
+    private Librarian librarian;
 
     public Book() {
     }
 
-    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Category> categories, LibrarianRegistration librarian) {
+    public Book(String title, String author, String editor, Integer pageNb, String state, Integer price, Integer shippingPrice, List<Category> categories, Librarian librarian) {
         this.title = title;
         this.author = author;
         this.editor = editor;
@@ -109,11 +109,11 @@ public class Book {
         this.categories = categories;
     }
 
-    public LibrarianRegistration getLibrarian() {
+    public Librarian getLibrarian() {
         return librarian;
     }
 
-    public void setLibrarian(LibrarianRegistration librarian) {
+    public void setLibrarian(Librarian librarian) {
         this.librarian = librarian;
     }
 }

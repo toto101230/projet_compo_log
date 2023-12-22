@@ -6,32 +6,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "clients")
-public class Client{
+@Table(name = "librarian")
+public class Librarian{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String login;
     private String password;
     private String name;
     private String address;
     private String mail;
     private String role;
-    @OneToMany(mappedBy = "client")
+
+    private Integer note;
+
+    @ManyToMany(mappedBy = "librarians")
     private List<Command> commands;
 
-    public Client() {
+    @OneToMany(mappedBy = "librarian")
+    private List<Book> books;
+
+    public Librarian() {
     }
 
-    public Client(String login, String password, String name, String address, String mail, String role) {
+    public Librarian(String login, String password, String name, String address, String mail, String role) {
         this.login = login;
         this.password = password;
         this.name = name;
         this.address = address;
         this.mail = mail;
         this.role = role;
+        this.note = -1;
         this.commands = new ArrayList<>();
+        this.books = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -90,11 +97,27 @@ public class Client{
         this.role = role;
     }
 
+    public Integer getNote() {
+        return note;
+    }
+
+    public void setNote(Integer note) {
+        this.note = note;
+    }
+
     public List<Command> getCommands() {
         return commands;
     }
 
     public void setCommands(List<Command> commands) {
         this.commands = commands;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }
