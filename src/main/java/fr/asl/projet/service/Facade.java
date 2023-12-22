@@ -42,7 +42,6 @@ public class Facade {
         librarianDTO.setAddress(librarian.getAddress());
         librarianDTO.setMail(librarian.getMail());
         userService.registerNewLibrarian(librarianDTO);
-        librarian.setValidated(true);
         librarianRegistrationRepository.delete(librarian);
     }
 

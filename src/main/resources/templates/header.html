@@ -57,16 +57,16 @@
             </form>
             <div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex">
                 <div th:if="${#authorization.expression('!hasRole(''ROLE_LIBRARIAN'')')}" class="pr-2">
-                    <form th:action="@{/account}" method="GET">
+                    <form th:action="@{/account}" method="GET" class="me-2">
                         <button>Mon compte</button>
                     </form>
                 </div>
-                <form th:action="@{/logout}" method="post">
+                <form th:action="@{/logout}" method="post" class="me-2">
                     <button>Se déconnecter</button>
                 </form>
             </div>
-            <div th:if="${#authorization.expression('!isAuthenticated()')}">
-                <form action="/login" method="GET">
+            <div th:if="${#authorization.expression('!isAuthenticated()')}" class="d-flex">
+                <form action="/login" method="GET" class="me-2">
                     <button>Se connecter</button>
                 </form>
             </div>

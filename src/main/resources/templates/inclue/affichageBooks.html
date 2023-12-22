@@ -38,7 +38,10 @@
                     <span th:if="${book.librarian.note} > 0" th:text="${book.librarian.note} + ' / 5'"></span>
                 </td>
                 <td>
-                    <button th:onclick="'addToCart(' + ${book.id} + ')'">Ajouter au panier</button>
+                    <div th:if="${#authorization.expression('!hasRole(''ROLE_LIBRARIAN'')')}" class="pr-2">
+                        <button th:onclick="'addToCart(' + ${book.id} + ')'">Ajouter au panier</button>
+                    </div>
+
                 </td>
             </tr>
             </tbody>

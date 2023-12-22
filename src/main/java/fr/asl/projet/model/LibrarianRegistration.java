@@ -18,7 +18,6 @@ public class LibrarianRegistration {
     private String mail;
     private String role;
     private boolean validated;
-    private Integer note;
 
     public LibrarianRegistration() {
     }
@@ -31,7 +30,6 @@ public class LibrarianRegistration {
         this.mail = mail;
         this.role = role;
         this.validated = false;
-        this.note = -1;
     }
 
     public Integer getId() {
@@ -96,13 +94,5 @@ public class LibrarianRegistration {
 
     public void setValidated(boolean validated) {
         this.validated = validated;
-    }
-
-    public Integer getNote() {
-        return note;
-    }
-
-    public void setNote(Integer note) {
-        this.note = note;
     }
 }

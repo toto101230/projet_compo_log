@@ -44,7 +44,7 @@
                         <form th:action="@{/cancelCommand}" method="POST">
                             <input type="hidden" name="idCommand" th:value="${command.id}">
                             <input type="hidden" name="login" th:value="${#authentication.getPrincipal().Username}">
-                            <label for="cancellationReason">Cancellation Reason:</label>
+                            <label for="cancellationReason">Raison d'annulation :</label>
                             <input type="text" id="cancellationReason" name="cancellationReason" required>
                             <button type="submit" class="btn btn-success">Annuler</button>
                         </form>
