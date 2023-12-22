@@ -53,8 +53,8 @@
                 </button>
             </form>
             <div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex">
-                <div th:if="${#authorization.expression('hasRole(''ROLE_CLIENT'')')}">
-                    <form th:action="@{/account}" method="GET" class="pr-2">
+                <div th:if="${#authorization.expression('!hasRole(''ROLE_LIBRARIAN'')')}" class="pr-2">
+                    <form th:action="@{/account}" method="GET">
                         <button>Mon compte</button>
                     </form>
                 </div>

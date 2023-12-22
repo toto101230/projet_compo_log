@@ -55,6 +55,7 @@
             <input type="hidden" name="totalShippingPrice" th:value="${totalShippingPrice}">
             <button type="submit" class="btn btn-primary">Commander</button>
         </form>
+        <button onclick="clearCart()" class="btn btn-primary mt-2">Vider le panier</button>
     </div>
 
     <script>
@@ -64,6 +65,12 @@
                 ids.splice(ids.indexOf(id), 1);
             }
             localStorage.setItem("cart", JSON.stringify(ids));
+            majSizeCart();
+            document.getElementById("formCart").submit();
+        }
+
+        function clearCart(){
+            localStorage.removeItem("cart");
             majSizeCart();
             document.getElementById("formCart").submit();
         }
