@@ -23,13 +23,15 @@
                     <tr>
                         <th>Note</th>
                         <th>Comment</th>
-                        <th>Auteur</th>
+                        <th>Livre</th>
+                        <th>Client</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="opinion : ${opinions}">
                         <td th:text="${opinion.note}"></td>
                         <td th:text="${opinion.comment}"></td>
+                        <td th:text="${opinion.book.book.title}"></td>
                         <td th:text="${opinion.login}"></td>
                     </tr>
                     </tbody>
