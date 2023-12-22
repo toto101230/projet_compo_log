@@ -37,6 +37,13 @@ public class LibrarianController {
         return "validateCommand";
     }
 
+    @PostMapping("cancelCommand")
+    public String cancelCommand(Model model, @RequestParam int idCommand, @RequestParam String login, @RequestParam String cancellationReason) {
+        facade.cancelCommand(idCommand, cancellationReason);
+        model.addAttribute("commands", facade.findAllCommandsByLibrarian(login));
+        return "validateCommand";
+    }
+
     @GetMapping("/addLibrarian")
     public String addLibrarian() {
         return "addLibrarian";

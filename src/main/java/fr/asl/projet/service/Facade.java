@@ -234,26 +234,35 @@ public class Facade {
         return true;
     }
 
-    public Iterable<Command> findAllCommandsNoValidated() {
-        return commandRepository.findAllByStatus(false);
-    }
-
     public void validateCommand(Integer idCommand, String login) {
         Command command = commandRepository.findById(idCommand).get();
         List<Boolean> validations = command.getValidations();
         validations.set(command.getLibrarians().indexOf(librarianRepository.findLibrarianByLogin(login)), true);
         command.setValidations(validations);
         if (!validations.contains(false)) {
-            command.setStatus(true);
+            command.setStatus(1);
         }
         commandRepository.save(command);
     }
 
-    public Iterable<Command> findAllCommands() {
-        return commandRepository.findAll();
+    public void cancelCommand(Integer idCommand, String cancellationReason) {
+        Command command = commandRepository.findById(idCommand).get();
+        command.setStatus(-1);
+        command.setCancellationReason(cancellationReason);
+        commandRepository.save(command);
     }
+
 
     public Iterable<Command> findAllCommandsByLibrarian(String login) {
         return commandRepository.findAllByLibrarians(librarianRepository.findLibrarianByLogin(login));
+    }
+
+    public Iterable<Command> findAllCommandsOfPastMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        Date date = calendar.getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = formatter.format(date);
+        return commandRepository.findAllByDateAfter(strDate);
     }
 }

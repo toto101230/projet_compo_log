@@ -26,7 +26,8 @@ public class Command {
     private int totalPrice;
     private int totalShippingPrice;
     private String date;
-    private boolean status;
+    private Integer status;
+    private String cancellationReason;
 
     public Command() {
     }
@@ -37,7 +38,8 @@ public class Command {
         this.totalPrice = totalPrice;
         this.totalShippingPrice = totalShippingPrice;
         this.date = date;
-        this.status = false;
+        this.status = 0;
+        this.cancellationReason = "";
         this.librarians = new ArrayList<>();
         this.validations = new ArrayList<>();
 
@@ -96,11 +98,11 @@ public class Command {
         this.date = date;
     }
 
-    public boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -118,5 +120,13 @@ public class Command {
 
     public void setValidations(List<Boolean> validations) {
         this.validations = validations;
+    }
+
+    public String getCancellationReason() {
+        return cancellationReason;
+    }
+
+    public void setCancellationReason(String cancellationReason) {
+        this.cancellationReason = cancellationReason;
     }
 }

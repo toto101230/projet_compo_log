@@ -5,14 +5,11 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">Amazon zero sucres</a>
 
-        <div th:if="${#authorization.expression('hasRole(''ROLE_LIBRARIAN'')')}">
-            <form action="/addBook" method="GET">
+        <div th:if="${#authorization.expression('hasRole(''ROLE_LIBRARIAN'')')}" class="d-flex">
+            <form action="/addBook" method="GET" class="me-2">
                 <button>Page d'ajout des ouvrages</button>
             </form>
-        </div>
-
-        <div th:if="${#authorization.expression('hasRole(''ROLE_LIBRARIAN'')')}">
-            <form action="/validateCommand" method="GET">
+            <form action="/validateCommand" method="GET" class="me-2">
                 <input type="hidden" name="login" th:value="${#authentication.getPrincipal().Username}">
                 <button>Validation des commandes</button>
             </form>
@@ -22,8 +19,11 @@
             <form action="/validateLibrarian" method="GET" class="me-2">
                 <button>Validation des libraires</button>
             </form>
-            <form action="/category" method="GET">
+            <form action="/category" method="GET" class="me-2">
                 <button>Gestion des catégories</button>
+            </form>
+            <form action="/recapCommand" method="GET" class="me-2">
+                <button>Récap des commandes</button>
             </form>
         </div>
 

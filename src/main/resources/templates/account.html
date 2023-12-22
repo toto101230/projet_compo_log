@@ -41,8 +41,12 @@
                         <td th:text="${command.totalPrice}"></td>
                         <td th:text="${command.totalShippingPrice}"></td>
                         <td th:text="${command.totalPrice + command.totalShippingPrice}"></td>
-                        <td th:if="${command.status}" class="text-success">Validée</td>
-                        <td th:unless="${command.status}" class="text-danger">En attente</td>
+                        <td th:if="${command.status == 0}" class="text-warning">En attente</td>
+                        <td th:if="${command.status == 1}" class="text-success">Validée</td>
+                        <td th:if="${command.status == -1}" class="text-danger">Annulée</td>
+                        <td th:if="${command.status == -1}" class="text-danger">
+                            Raison d'annulation : <span th:text="${command.cancellationReason}"></span>
+                        </td>
                         <td>
                             <button onclick="alert('Pas encore implémenté')">Voir</button>
                         </td>

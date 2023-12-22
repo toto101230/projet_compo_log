@@ -19,6 +19,12 @@ public class AdminController {
         return "validateLibrarian";
     }
 
+    @GetMapping("/recapCommand")
+    public String recapCommand(Model model) {
+        model.addAttribute("commands", facade.findAllCommandsOfPastMonth());
+        return "recapCommand";
+    }
+
     @PostMapping("/validateLibrarian")
     public String validateLibrarian(Model model, @RequestParam String login) {
         facade.validateLibrarian(login);
