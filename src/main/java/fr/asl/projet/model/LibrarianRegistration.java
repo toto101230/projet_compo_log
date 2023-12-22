@@ -17,7 +17,6 @@ public class LibrarianRegistration {
     private String address;
     private String mail;
     private String role;
-    private boolean validated;
 
     public LibrarianRegistration() {
     }
@@ -29,7 +28,6 @@ public class LibrarianRegistration {
         this.address = address;
         this.mail = mail;
         this.role = role;
-        this.validated = false;
     }
 
     public Integer getId() {
@@ -86,13 +84,5 @@ public class LibrarianRegistration {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public boolean isValidated() {
-        return validated;
-    }
-
-    public void setValidated(boolean validated) {
-        this.validated = validated;
     }
 }

@@ -15,7 +15,7 @@ public class AdminController {
 
     @GetMapping("/validateLibrarian")
     public String validateLibrarian(Model model) {
-        model.addAttribute("librarians", facade.findAllLibrariansNoValidated());
+        model.addAttribute("librarians", facade.findAllLibrarians());
         return "validateLibrarian";
     }
 
@@ -28,14 +28,14 @@ public class AdminController {
     @PostMapping("/validateLibrarian")
     public String validateLibrarian(Model model, @RequestParam String login) {
         facade.validateLibrarian(login);
-        model.addAttribute("librarians", facade.findAllLibrariansNoValidated());
+        model.addAttribute("librarians", facade.findAllLibrarians());
         return "validateLibrarian";
     }
 
     @PostMapping("/deleteLibrarian")
     public String deleteLibrarian(Model model, @RequestParam String login) {
         facade.deleteLibrarian(login);
-        model.addAttribute("librarians", facade.findAllLibrariansNoValidated());
+        model.addAttribute("librarians", facade.findAllLibrarians());
         return "validateLibrarian";
     }
 }

@@ -29,8 +29,8 @@ public class Facade {
     @Autowired
     private OpinionRepository opinionRepository;
 
-    public Iterable<LibrarianRegistration> findAllLibrariansNoValidated() {
-        return librarianRegistrationRepository.findAllByValidated(false);
+    public Iterable<LibrarianRegistration> findAllLibrarians() {
+        return librarianRegistrationRepository.findAll();
     }
 
     public void validateLibrarian(String login) {
