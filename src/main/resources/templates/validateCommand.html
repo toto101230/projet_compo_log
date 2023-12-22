@@ -36,7 +36,7 @@
                 <td>
                     <form th:action="@{/validateCommand}" method="POST">
                         <input type="hidden" name="idCommand" th:value="${command.id}">
-                        <input type="hidden" name="idLibrarian" th:value="${#authentication.principal.id}">
+                        <input type="hidden" name="login" th:value="${#authentication.getPrincipal().Username}">
                         <button type="submit" class="btn btn-success">Valider</button>
                     </form>
             </tr>

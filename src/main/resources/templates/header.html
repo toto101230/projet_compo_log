@@ -13,6 +13,7 @@
 
         <div th:if="${#authorization.expression('hasRole(''ROLE_LIBRARIAN'')')}">
             <form action="/validateCommand" method="GET">
+                <input type="hidden" name="login" th:value="${#authentication.getPrincipal().Username}">
                 <button>Validation des commandes</button>
             </form>
         </div>
@@ -49,9 +50,11 @@
                 </button>
             </form>
             <div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex">
-                <form th:action="@{/account}" method="GET" class="pr-2">
-                    <button>Mon compte</button>
-                </form>
+                <div th:if="${#authorization.expression('hasRole(''ROLE_CLIENT'')')}">
+                    <form th:action="@{/account}" method="GET" class="pr-2">
+                        <button>Mon compte</button>
+                    </form>
+                </div>
                 <form th:action="@{/logout}" method="post">
                     <button>Se déconnecter</button>
                 </form>

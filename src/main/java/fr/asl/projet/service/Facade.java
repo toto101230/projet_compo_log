@@ -212,14 +212,22 @@ public class Facade {
         return commandRepository.findAllByStatus(false);
     }
 
-    public void validateCommand(Integer idCommand, Integer idLibrarian) {
+    public void validateCommand(Integer idCommand, String login) {
         Command command = commandRepository.findById(idCommand).get();
         List<Boolean> validations = command.getValidations();
-        validations.set(command.getLibrarians().indexOf(librarianRepository.findLibrarianById(idLibrarian)), true);
+        validations.set(command.getLibrarians().indexOf(librarianRepository.findLibrarianByLogin(login)), true);
         command.setValidations(validations);
         if (!validations.contains(false)) {
             command.setStatus(true);
         }
         commandRepository.save(command);
+    }
+
+    public Iterable<Command> findAllCommands() {
+        return commandRepository.findAll();
+    }
+
+    public Iterable<Command> findAllCommandsByLibrarian(String login) {
+        return commandRepository.findAllByLibrarians(librarianRepository.findLibrarianByLogin(login));
     }
 }

@@ -25,15 +25,15 @@ public class LibrarianController {
     }
 
     @GetMapping("/validateCommand")
-    public String validateCommand(Model model) {
-        model.addAttribute("commands", facade.findAllCommandsNoValidated());
+    public String validateCommand(Model model, @RequestParam String login ) {
+        model.addAttribute("commands", facade.findAllCommandsByLibrarian(login));
         return "validateCommand";
     }
 
     @PostMapping("/validateCommand")
-    public String validateCommand(Model model, @RequestParam int idCommand, @RequestParam int idLibrarian) {
-        facade.validateCommand(idCommand, idLibrarian);
-        model.addAttribute("commands", facade.findAllCommandsNoValidated());
+    public String validateCommand(Model model, @RequestParam int idCommand, @RequestParam String login) {
+        facade.validateCommand(idCommand, login);
+        model.addAttribute("commands", facade.findAllCommandsByLibrarian(login));
         return "validateCommand";
     }
 

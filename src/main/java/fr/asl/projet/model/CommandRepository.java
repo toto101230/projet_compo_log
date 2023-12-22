@@ -8,4 +8,6 @@ public interface CommandRepository extends CrudRepository<Command, Integer> {
     List<Command> findAllByClient(Client client);
 
     List<Command> findAllByStatus(boolean status);
+
+    List<Command> findAllByLibrarians(Librarian librarian);
 }

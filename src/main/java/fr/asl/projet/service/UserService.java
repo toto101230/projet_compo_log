@@ -34,6 +34,7 @@ public class UserService {
         librarian.setName(accountDto.getName());
         librarian.setAddress(accountDto.getAddress());
         librarian.setMail(accountDto.getMail());
+        librarian.setNote(-1);
         librarian.setBooks(new ArrayList<>());
         librarian.setCommands(new ArrayList<>());
         librarian.setRole("ROLE_LIBRARIAN");

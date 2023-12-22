@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "clients")
 public class Client{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
