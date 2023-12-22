@@ -8,21 +8,62 @@
 </head>
 <body>
     <header th:insert="~{header :: header}"></header>
-    <h1>Commande</h1>
-    <p id="time">Nous interrogeons votre banque...</p>
-    <div id="time2" class="invisible">
-        <form th:action="@{/}" method="GET">
-            <button type="submit" class="btn btn-primary">Retour à l'accueil</button>
-        </form>
+    <h1 class="text-center">Informations de la commande numéro <span th:text="${command.id}"></span></h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Informations de la commande</h2>
+                <p>Date de commande : <span th:text="${command.date}"></span></p>
+                <p>Total prix : <span th:text="${command.totalPrice}"></span></p>
+                <p>Total frais de port : <span th:text="${command.totalShippingPrice}"></span></p>
+                <p>Total : <span th:text="${command.totalPrice + command.totalShippingPrice}"></span></p>
+                <p>Statut :
+                    <span th:if="${command.status == 0}" class="text-warning">En attente</span>
+                    <span th:if="${command.status == 1}" class="text-success">Validée</span>
+                    <span th:if="${command.status == -1}" class="text-danger">Annulée, raison : <span th:text="${command.cancellationReason}"></span></span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h2>Livres de la commande</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Editor</th>
+                        <th>Nombre de pages</th>
+                        <th>Etat</th>
+                        <th>Prix</th>
+                        <th>Frais de port</th>
+                        <th>Quantité</th>
+                        <th>Noté</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${command.books}">
+                        <td th:text="${book.book.title}"></td>
+                        <td th:text="${book.book.author}"></td>
+                        <td th:text="${book.book.editor}"></td>
+                        <td th:text="${book.book.pageNb}"></td>
+                        <td th:text="${book.book.state}"></td>
+                        <td th:text="${book.book.price}"></td>
+                        <td th:text="${book.book.shippingPrice}"></td>
+                        <td th:text="${book.quantity}"></td>
+                        <td>
+                            <form th:action="@{/addOpinion}" method="POST">
+                                <input type="number" name="note" min="0" max="5" step="0.1" required th:value="${book.opinion != null ? book.opinion.note : ''}">
+                                <input type="text" name="comment" placeholder="Commentaire (facultatif)" th:value="${book.opinion != null ? book.opinion.comment : ''}">
+                                <input type="hidden" name="commandBookId" th:value="${book.id}">
+                                <button type="submit">Noter</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-    <script>
-        localStorage.removeItem("cart");
-        setTimeout(function() {
-            document.getElementById("time").innerHTML = "Votre commande a bien été prise en compte !";
-            document.getElementById("time2").classList.remove("invisible");
-            majSizeCart();
-        }, 3000);
-    </script>
 </body>
 </html>

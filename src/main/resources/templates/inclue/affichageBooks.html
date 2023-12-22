@@ -33,7 +33,10 @@
                 <td>
                     <span th:each="category : ${book.categories}" th:text="${category.name} + ' '"></span>
                 </td>
-                <td th:text="${book.librarian.note}"></td>
+                <td>
+                    <span th:if="${book.librarian.note} == -1">Pas de note</span>
+                    <span th:if="${book.librarian.note} > 0" th:text="${book.librarian.note} + ' / 5'"></span>
+                </td>
                 <td>
                     <button th:onclick="'addToCart(' + ${book.id} + ')'">Ajouter au panier</button>
                 </td>

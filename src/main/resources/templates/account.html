@@ -48,7 +48,10 @@
                             Raison d'annulation : <span th:text="${command.cancellationReason}"></span>
                         </td>
                         <td>
-                            <button onclick="alert('Pas encore implémenté')">Voir</button>
+                            <form th:action="@{/command}" method="POST">
+                                <input type="hidden" name="id" th:value="${command.id}">
+                                <button type="submit">Voir les détails</button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

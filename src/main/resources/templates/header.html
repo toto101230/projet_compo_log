@@ -13,6 +13,9 @@
                 <input type="hidden" name="login" th:value="${#authentication.getPrincipal().Username}">
                 <button>Validation des commandes</button>
             </form>
+            <form action="/opinion" method="GET">
+                <button>Page d'avis</button>
+            </form>
         </div>
 
         <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="d-flex">
@@ -45,7 +48,7 @@
         </div>
         <!--        coller complement à gauche avec bootstrap-->
         <div class="d-flex me-3">
-            <form th:action="@{/cart}" method="POST" id="formCart" class="me-2">
+            <form th:action="@{/cart}" method="POST" id="formCart" class="me-2" th:if="${#authorization.expression('!isAuthenticated() || !hasRole(''ROLE_LIBRARIAN'')')}">
                 <input type="hidden" id="ids" name="ids">
                 <button>
                     <span id="cartSize"></span>

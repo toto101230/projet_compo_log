@@ -26,6 +26,8 @@ public class Facade {
     private CommandRepository commandRepository;
     @Autowired
     private CommandBookRepository commandBookRepository;
+    @Autowired
+    private OpinionRepository opinionRepository;
 
     public Iterable<LibrarianRegistration> findAllLibrariansNoValidated() {
         return librarianRegistrationRepository.findAllByValidated(false);
@@ -264,5 +266,60 @@ public class Facade {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String strDate = formatter.format(date);
         return commandRepository.findAllByDateAfter(strDate);
+    }
+
+    public Command findCommandById(int id) {
+        return commandRepository.findById(id).get();
+    }
+
+    public void addOpinion(String username, String comment, Double note, Integer commandBookId) {
+        CommandBook commandBook = commandBookRepository.findById(commandBookId).get();
+        Opinion opinion = new Opinion(username, comment, note, commandBook);
+        commandBook.setOpinion(opinion);
+        opinionRepository.save(opinion);
+        commandBookRepository.save(commandBook);
+        majNoteLibrarian(commandBook.getBook().getLibrarian());
+    }
+
+    private void majNoteLibrarian(Librarian librarian) {
+        List<CommandBook> commandBooks = commandBookRepository.findAllByBook_Librarian(librarian);
+        double totalNote = 0;
+        int nbOpinions = 0;
+        for (CommandBook commandBook : commandBooks) {
+            if (commandBook.getOpinion() != null) {
+                totalNote += commandBook.getOpinion().getNote();
+                nbOpinions++;
+            }
+        }
+        if (nbOpinions != 0) {
+            double note = totalNote / nbOpinions;
+            librarian.setNote(Math.round(note * 10.0) / 10.0);
+        }
+        librarianRepository.save(librarian);
+    }
+
+    public List<Opinion> findAllOpinionOfLibrarian(String username) {
+        Librarian librarian = librarianRepository.findLibrarianByLogin(username);
+        List<CommandBook> commandBooks = commandBookRepository.findAllByBook_Librarian(librarian);
+        List<Opinion> opinions = new ArrayList<>();
+        for (CommandBook commandBook : commandBooks) {
+            if (commandBook.getOpinion() != null) {
+                opinions.add(commandBook.getOpinion());
+            }
+        }
+        return opinions;
+    }
+
+    public Double findNoteLibrarian(String username) {
+        Librarian librarian = librarianRepository.findLibrarianByLogin(username);
+        return librarian.getNote();
+    }
+
+    public void createAdmin(String login, String password, String name, String address, String mail, String role) {
+        clientRepository.save(new Client(login, password, name, address, mail, role));
+    }
+
+    public List<Integer> findAllCategoryIDByNameEndsWith(String name) {
+        return categoryRepository.findAllIDByNameEndsWith(name);
     }
 }

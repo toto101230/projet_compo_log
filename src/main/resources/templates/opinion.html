@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Amazon-like</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <header th:insert="~{header :: header}"></header>
+    <h1 class="text-center">Les différents avis</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <p>Votre note moyenne est de <span th:text="${noteFinal}"></span> / 5</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h2>Les avis des clients</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Note</th>
+                        <th>Comment</th>
+                        <th>Auteur</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="opinion : ${opinions}">
+                        <td th:text="${opinion.note}"></td>
+                        <td th:text="${opinion.comment}"></td>
+                        <td th:text="${opinion.login}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

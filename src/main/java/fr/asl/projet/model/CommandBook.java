@@ -16,6 +16,10 @@ public class CommandBook {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    @OneToOne
+    @JoinColumn(name = "opinion_id")
+    private Opinion opinion;
+
     private Integer quantity;
 
     public CommandBook() {
@@ -25,6 +29,7 @@ public class CommandBook {
         this.command = command;
         this.book = book;
         this.quantity = quantity;
+        this.opinion = null;
     }
 
     public Integer getId() {
@@ -57,5 +62,13 @@ public class CommandBook {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Opinion getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(Opinion opinion) {
+        this.opinion = opinion;
     }
 }

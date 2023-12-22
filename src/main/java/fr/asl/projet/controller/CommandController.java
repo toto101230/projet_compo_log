@@ -27,9 +27,16 @@ public class CommandController {
         return "cart";
     }
 
-    @PostMapping("/command")
+    @PostMapping("/addcommand")
     public String command(@AuthenticationPrincipal UserDetails userDetails, @RequestParam String ids, @RequestParam int totalPrice, @RequestParam int totalShippingPrice) {
         facade.createCommand(userDetails.getUsername(), ids, totalPrice, totalShippingPrice);
+        return "addCommand";
+    }
+
+    @PostMapping("/command")
+    public String command(Model model, @RequestParam int id) {
+        Command command = facade.findCommandById(id);
+        model.addAttribute("command", command);
         return "command";
     }
 }

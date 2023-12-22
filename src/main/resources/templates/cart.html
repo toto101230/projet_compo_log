@@ -49,7 +49,7 @@
         <p>Prix total : <span th:text="${totalPrice}"></span>€</p>
         <p>Frais de port : <span th:text="${totalShippingPrice}"></span>€</p>
         <p>Prix total avec frais de port : <span th:text="${totalPrice + totalShippingPrice}"></span>€</p>
-        <form th:action="@{/command}" method="POST">
+        <form th:action="@{/addcommand}" method="POST">
             <input type="hidden" name="ids" th:value="${ids}">
             <input type="hidden" name="totalPrice" th:value="${totalPrice}">
             <input type="hidden" name="totalShippingPrice" th:value="${totalShippingPrice}">

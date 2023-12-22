@@ -16,8 +16,7 @@ public class Librarian{
     private String address;
     private String mail;
     private String role;
-
-    private Integer note;
+    private Double note;
 
     @ManyToMany(mappedBy = "librarians")
     private List<Command> commands;
@@ -35,7 +34,7 @@ public class Librarian{
         this.address = address;
         this.mail = mail;
         this.role = role;
-        this.note = -1;
+        this.note = -1.0;
         this.commands = new ArrayList<>();
         this.books = new ArrayList<>();
     }
@@ -96,11 +95,11 @@ public class Librarian{
         this.role = role;
     }
 
-    public Integer getNote() {
+    public Double getNote() {
         return note;
     }
 
-    public void setNote(Integer note) {
+    public void setNote(Double note) {
         this.note = note;
     }
 

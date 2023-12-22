@@ -24,14 +24,17 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/login").anonymous()
                 .requestMatchers("/", "/error", "/cart", "/search", "/searchAdvanced", "/addClient", "/addLibrarian").permitAll()
+                .requestMatchers("/account", "/addOpinion").hasAnyRole("ADMIN", "CLIENT")
                 .requestMatchers("/validateLibrarian", "/category", "/recapCommand").hasRole("ADMIN")
-                .requestMatchers("/addBook", "validateCommand").hasRole("LIBRARIAN")
+                .requestMatchers("/addBook", "/validateCommand", "/opinion").hasRole("LIBRARIAN")
                 .anyRequest().authenticated()
         ).formLogin((form) -> form
                 .loginPage("/login")
                 .permitAll()
-        ).logout((logout) -> logout.permitAll());
-
+        ).logout((logout) -> logout.permitAll()
+//        ).exceptionHandling((exception) -> exception
+//                .accessDeniedPage("/")
+        );
 
         return http.build();
     }
