@@ -30,15 +30,18 @@ public class SearchController {
         List<Book> books = (List<Book>) facade.findBooksByTitle(search);
         model.addAttribute("search", search);
         model.addAttribute("categoriesAll", facade.findAllCategories());
+        // on enlève les livres si l'auteur ne correspond pas
         if (author != null && !author.isEmpty()) {
             books.retainAll((List<Book>) facade.findBooksByAuthor(author));
             model.addAttribute("author", author);
         }
+        // on enlève les livres si le nombre de pages ne correspond pas
         if (pageNbMax != null && pageNbMin != null && !pageNbMax.isEmpty() && !pageNbMin.isEmpty()) {
             books.retainAll((List<Book>) facade.findBooksByPageNbBetween(Integer.parseInt(pageNbMin), Integer.parseInt(pageNbMax)));
             model.addAttribute("pageNbMax", pageNbMax);
             model.addAttribute("pageNbMin", pageNbMin);
         }
+        // on enlève les livres si les catégories ne correspondent pas
         if (categories != null && !categories.isEmpty()) {
             books.retainAll(facade.findBooksByCategories(categories));
             model.addAttribute("categories", categories);

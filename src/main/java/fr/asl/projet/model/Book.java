@@ -9,7 +9,6 @@ public class Book implements Identifiable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String title;
     private String author;
     private String editor;

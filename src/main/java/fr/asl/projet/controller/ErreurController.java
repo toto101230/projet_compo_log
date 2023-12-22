@@ -16,8 +16,6 @@ public class ErreurController implements ErrorController {
 
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
-
-            // Personnalisez ici en fonction du code d'erreur
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
                 model.addAttribute("error", "Page non trouvée");
                 model.addAttribute("code", statusCode);
@@ -30,7 +28,7 @@ public class ErreurController implements ErrorController {
                 model.addAttribute("error", "Accès refusé");
                 model.addAttribute("code", statusCode);
             }
-            // Ajoutez d'autres conditions pour différents codes d'état si nécessaire
+            // Autres codes d'erreur
             else {
                 model.addAttribute("error", "Erreur inconnue");
                 model.addAttribute("code", statusCode);

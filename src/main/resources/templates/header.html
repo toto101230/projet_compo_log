@@ -9,7 +9,7 @@
             <form action="/addBook" method="GET" class="me-2">
                 <button>Page d'ajout des ouvrages</button>
             </form>
-            <form action="/validateCommand" method="GET" class="me-2">
+            <form th:action="@{/validateCommand}" method="GET" class="me-2">
                 <input type="hidden" name="login" th:value="${#authentication.getPrincipal().Username}">
                 <button>Validation des commandes</button>
             </form>

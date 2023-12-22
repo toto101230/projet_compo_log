@@ -33,6 +33,7 @@ public class Facade {
         return librarianRegistrationRepository.findAll();
     }
 
+    // permet de créer un libraire quand un admin valide son inscription
     public void validateLibrarian(String login) {
         LibrarianRegistration librarian = librarianRegistrationRepository.findByLogin(login);
         UserDTO librarianDTO = new UserDTO();
@@ -61,6 +62,7 @@ public class Facade {
         return categoryRepository.findAll();
     }
 
+    // permet de créer un client lors de son inscription
     public boolean createClient(String login, String password, String name, String address, String mail) {
         if (clientRepository.findClientByLogin(login) != null || librarianRepository.findLibrarianByLogin(login) != null) {
             return false;
@@ -75,6 +77,8 @@ public class Facade {
         return true;
     }
 
+
+    // permet de créer une map pour le panier contenant les livres et leur quantité selon les ids des livres
     public Map<Book, Integer> createBooks(List<Integer> ids) {
         Map<Book, Integer> books = new HashMap<>();
         for (Integer id : ids) {
@@ -91,6 +95,7 @@ public class Facade {
         return books;
     }
 
+    // permet de trier une map par ordre croissant des ids des objets
     private <T extends Identifiable> Map<T, Integer> trie(Map<T, Integer> originalMap) {
         Comparator<T> byIdComparator = Comparator.comparing(Identifiable::getId);
         Map<T, Integer> sortedMap = new TreeMap<>(byIdComparator);
@@ -125,7 +130,7 @@ public class Facade {
             commandBookRepository.save(commandBook);
         }
 
-        //for each book in the command, we add the librarian associated to the book to the list of librarians
+        // pour chaque livre de la commande, on ajoute le libraire associé au livre à la liste des libraires de la commande
         List<Librarian> librarians = new ArrayList<>();
         for (CommandBook commandBook : command.getBooks()) {
             if (!librarians.contains(commandBook.getBook().getLibrarian())) {
