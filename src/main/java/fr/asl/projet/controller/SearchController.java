@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,7 +26,7 @@ public class SearchController {
     }
 
     @PostMapping("/searchAdvanced")
-    public String searchAdvanced(Model model, @RequestParam String search, String author, String pageNbMax, String pageNbMin, @RequestParam List<Category> categories) {
+    public String searchAdvanced(Model model, @RequestParam String search, String author, String pageNbMax, String pageNbMin, @RequestParam(required = false) List<Category> categories) {
         List<Book> books = (List<Book>) facade.findBooksByTitle(search);
         model.addAttribute("search", search);
         model.addAttribute("categoriesAll", facade.findAllCategories());
@@ -41,6 +42,8 @@ public class SearchController {
         if (categories != null && !categories.isEmpty()) {
             books.retainAll(facade.findBooksByCategories(categories));
             model.addAttribute("categories", categories);
+        }else {
+            model.addAttribute("categories", new ArrayList<Category>());
         }
         model.addAttribute("books", books);
         return "search";

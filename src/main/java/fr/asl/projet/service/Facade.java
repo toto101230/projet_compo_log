@@ -90,10 +90,10 @@ public class Facade {
         return books;
     }
 
-    private Map<Book, Integer> trie(Map<Book, Integer> books) {
-        Comparator<Book> byIdComparator = Comparator.comparing(Book::getId);
-        Map<Book, Integer> sortedMap = new TreeMap<>(byIdComparator);
-        sortedMap.putAll(books);
+    private <T extends Identifiable> Map<T, Integer> trie(Map<T, Integer> originalMap) {
+        Comparator<T> byIdComparator = Comparator.comparing(Identifiable::getId);
+        Map<T, Integer> sortedMap = new TreeMap<>(byIdComparator);
+        sortedMap.putAll(originalMap);
         return new LinkedHashMap<>(sortedMap);
     }
 
@@ -204,8 +204,34 @@ public class Facade {
         return commandRepository.findAllByClient(clientRepository.findClientByLogin(username));
     }
 
-    public void createCategory(String name) {
+    public boolean createCategory(String name) {
+        if (categoryRepository.findByName(name) != null) {
+            return false;
+        }
         categoryRepository.save(new Category(name));
+        return true;
+    }
+
+    public Map<Category, Integer> findAllCategoriesWithNumber() {
+        List<Category> categories = (List<Category>) categoryRepository.findAll();
+        Map<Category, Integer> categoriesWithNumber = new HashMap<>();
+        for (Category category : categories) {
+            categoriesWithNumber.put(category, bookRepository.findAllByCategories(category).size());
+        }
+        categoriesWithNumber = trie(categoriesWithNumber);
+        return categoriesWithNumber;
+    }
+
+    public boolean deleteCategory(int id) {
+        Optional<Category> category = categoryRepository.findById(id);
+        if(category.isEmpty()) {
+            return false;
+        }
+        if (!bookRepository.findAllByCategories(category.get()).isEmpty()) {
+            return false;
+        }
+        categoryRepository.deleteById(id);
+        return true;
     }
 
     public Iterable<Command> findAllCommandsNoValidated() {

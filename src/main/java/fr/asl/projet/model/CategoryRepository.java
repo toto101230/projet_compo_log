@@ -15,4 +15,6 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
 
     @Query("SELECT c.id FROM Category c WHERE c.name LIKE %:name%")
     List<Integer> findAllIDByNameEndsWith(@Param("name") String name);
+
+    Category findByName(String name);
 }

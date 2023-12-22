@@ -18,9 +18,12 @@
             </form>
         </div>
 
-        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-            <form action="/validateLibrarian" method="GET">
+        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="d-flex">
+            <form action="/validateLibrarian" method="GET" class="me-2">
                 <button>Validation des libraires</button>
+            </form>
+            <form action="/category" method="GET">
+                <button>Gestion des catégories</button>
             </form>
         </div>
 
