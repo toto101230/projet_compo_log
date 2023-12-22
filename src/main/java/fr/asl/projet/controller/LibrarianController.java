@@ -24,6 +24,19 @@ public class LibrarianController {
         }
     }
 
+    @GetMapping("/validateCommand")
+    public String validateCommand(Model model) {
+        model.addAttribute("commands", facade.findAllCommandsNoValidated());
+        return "validateCommand";
+    }
+
+    @PostMapping("/validateCommand")
+    public String validateCommand(Model model, @RequestParam int id) {
+        facade.validateCommand(id);
+        model.addAttribute("commands", facade.findAllCommandsNoValidated());
+        return "validateCommand";
+    }
+
     @GetMapping("/addLibrarian")
     public String addLibrarian() {
         return "addLibrarian";

@@ -189,4 +189,14 @@ public class Facade {
     public void createCategory(String name) {
         categoryRepository.save(new Category(name));
     }
+
+    public Iterable<Command> findAllCommandsNoValidated() {
+        return commandRepository.findAllByStatus(false);
+    }
+
+    public void validateCommand(Integer id) {
+        Command command = commandRepository.findById(id).get();
+        command.setStatus(true);
+        commandRepository.save(command);
+    }
 }

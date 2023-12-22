@@ -25,7 +25,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/login").anonymous()
                 .requestMatchers("/", "/error", "/cart", "/search", "/searchAdvanced", "/addClient", "/addLibrarian").permitAll()
                 .requestMatchers("validateLibrarian").hasRole("ADMIN")
-                .requestMatchers("/addBook").hasRole("LIBRARIAN")
+                .requestMatchers("/addBook", "validateCommand").hasRole("LIBRARIAN")
                 .anyRequest().authenticated()
         ).formLogin((form) -> form
                 .loginPage("/login")
